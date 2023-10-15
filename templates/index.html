@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Wheel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header> <!-- At top of the screen, fixed, full-width, auto-height, background lightgreen-->
+        <!-- All links: hover change background to blue, click change font color to -->
+        <div class="header">
+            <div class="left">
+                <h2 id="logo">Lucky Wheel</h2>
+                <a href="/redemption.html">Redemption</a>
+                <br>
+                <a href="/exchange.html">Exchange Card</a>
+            </div>
+            <div class="right">
+                {% if login == False %}
+                    <a href="/login.html">Login</a>
+                {% else %}
+                    <p>{{username}} | <a href="/signout">Sign out</a></p>
+                {% endif %}
+                <p>{{gems|default(0)}} <i class="fa-regular fa-gem"></i></p>
+                <p>{{card|default(0)}} <i class="fa-brands fa-cc-visa"></i></p>
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        <h2>Normal Roll</h2>
+        <p>Every 10 Rolls will reward up to 1 <i class="fa-brands fa-cc-visa"></i> or 160 <i class="fa-regular fa-gem"></i>.</p>
+        <p>Permanent.</p>
+        <button>1 <i class="fa-brands fa-cc-visa"></i> | Roll x1</button>
+        <button>10 <i class="fa-brands fa-cc-visa"></i> | Roll x10</button>
+    </div>
+</body>
+</html>

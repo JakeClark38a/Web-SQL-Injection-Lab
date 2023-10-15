@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<style>
+
+</style>
+<body>
+    <header> <!-- At top of the screen, fixed, full-width, auto-height, background lightgreen-->
+        <!-- All links: hover change background to blue, click change font color to -->
+        <div class="header">
+            <div class="left">
+                <a href="/index.html">Lucky Wheel</a>
+                <br>
+                <a href="/redemption.html">Redemption</a>
+                <br>
+                <a href="/exchange.html">Exchange Card</a>
+            </div>
+            <div class="right">
+                <h2>Login</h2>
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        <h2>Login</h2>
+        {% if status==False %}
+        <p style="color: red">Invalid username or password. Try again.</p>
+        {% endif %}
+        <form method="post" action="/login.html">
+            <label for="username">Username: </label>
+            <input type="text" id="username" name="username" maxlength="64" autofocus required>
+            <br>
+            <label for="password">Password: </label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <input type="submit" name="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

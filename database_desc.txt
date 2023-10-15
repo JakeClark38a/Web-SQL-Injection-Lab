@@ -1,0 +1,6 @@
+ACCOUNT(<USERID>, UID, HASH, USERNAME, PASSWD)
+Tân từ: Thông tin tài khoản gồm ID phân biệt, UID sử dụng trong quá trình trao đổi Cookie, username, password, mã SHA3-256 của id, uid, username, password kết hợp lại
+REDEEMCODE(<CODEID>, HASH, CODE, FROMDATE, TODATE)
+Tân từ: Thông tin code gồm ID phân biệt, mã code gồm tối đa 12 ký tự, thời hạn hoạt động từ ngày nào đến ngày nào, mã SHA3-256 của id, code, fromdate, todate kết hợp lại
+CODEUSED(<USERID>, <CODEID>, STATUS='true')
+Tân từ: Thông tin sử dụng code của người dùng gồm id người dùng, id của code, và trạng thái đã dùng hay chưa (true/false)

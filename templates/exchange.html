@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exchange Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get references to the relevant HTML elements
+        const slider = document.getElementById("slider");
+        const decreaseButton = document.getElementById("decrease");
+        const increaseButton = document.getElementById("increase");
+        const fullButton = document.getElementById("full");
+        const currentValue = document.getElementById("current-value");
+        const submitButton = document.getElementById("submit");
+        const statusText = document.getElementById("status");
+
+        // Initialize the current value
+        let value = 0;
+        slider.value = 0;
+        currentValue.innerText = `Current: ${value}`;
+
+        // Add event listeners for the slider and buttons
+        slider.addEventListener("input", function () {
+            value = slider.value;
+            currentValue.innerText = `Current: ${value}`;
+        });
+
+        decreaseButton.addEventListener("click", function () {
+            if (value > 0) {
+                value-= parseInt(slider.getAttribute("step"));
+                slider.value = value;
+                currentValue.innerText = `Current: ${value}`;
+            }
+        });
+
+        increaseButton.addEventListener("click", function () {
+            if (value < parseInt(slider.getAttribute("max"))) {
+                value+= parseInt(slider.getAttribute("step"));
+                slider.value = value;
+                currentValue.innerText = `Current: ${value}`;
+            }
+        });
+
+        fullButton.addEventListener("click", function () {
+            value = parseInt(slider.getAttribute("max"));
+            slider.value = value;
+            currentValue.innerText = `Current: ${value}`;
+        });
+
+        submitButton.addEventListener("click", function () {
+            // Send a POST request to "/exchange.html" with the value as a parameter
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/exchange.html", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Handle the response if needed
+                    console.log(xhr.responseText);
+                    if (xhr.responseText !== "") {
+                        statusText.innerText = xhr.responseText;
+                        setTimeout(function() {
+                            statusText.innerText = "";
+                        }, 5000); // 5000 milliseconds = 5 seconds
+                    }
+                }
+            };
+            xhr.send(`value=${value}`);
+        });
+    });
+</script>
+<body>
+    <header> <!-- At top of the screen, fixed, full-width, auto-height, background lightgreen-->
+        <!-- All links: hover change background to blue, click change font color to -->
+        <div class="header">
+            <div class="left">
+                <a href="/index.html">Lucky Wheel</a>
+                <br>
+                <a href="/redemption.html">Redemption</a>
+                <h2 id="logo">Exchange Card</h2>
+            </div>
+            <div class="right">
+                {% if login == False %}
+                    <a href="/login.html">Login</a>
+                {% else %}
+                    <p>{{username}} | <a href="/signout">Sign out</a></p>
+                {% endif %}
+                <p>{{gems|default(0)}} <i class="fa-regular fa-gem"></i></p>
+                <p>{{card|default(0)}} <i class="fa-brands fa-cc-visa"></i></p>
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        <h2>Exchange Card</h2>
+        {% if login == True %}
+            <p>160 <i class="fa-regular fa-gem"></i> => 1 <i class="fa-brands fa-cc-visa"></i></p>
+            <p id="current-value">Current: 0</p>
+            <input type="range" id="slider" min="0" max="{{max_val}}" step="160">
+            <button id="decrease">-</button>
+            <button id="increase">+</button>
+            <button id="full">F</button>
+            <br>
+            <button id="submit">Confirm</button>
+            <p id="status"></p>
+        {% else %}
+            <p>Login to exchange card</p>
+        {% endif %}
+    </div>
+    
+</body>
+</html>

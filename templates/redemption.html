@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redemption</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header> <!-- At top of the screen, fixed, full-width, auto-height, background lightgreen-->
+        <!-- All links: hover change background to blue, click change font color to -->
+        <div class="header">
+            <div class="left">
+                <a href="/index.html">Lucky Wheel</a>
+                <h2 id="logo">Redemption</h2>
+                <a href="/exchange.html">Exchange Card</a>
+            </div>
+            <div class="right">
+                {% if login==False %}
+                    <a href="/login.html">Login</a>
+                {% else %}
+                    <p>{{username}} | <a href="/signout">Sign out</a></p>
+                {% endif %}
+                <!-- <p>0 <i class="fa-regular fa-gem"></i></p>
+                <p>0 <i class="fa-brands fa-cc-visa"></i></p> -->
+            </div>
+        </div>
+    </header>
+    <div class="body">
+        <h2>Redemption</h2>
+        {% if login == True %}
+            <p>You can test with this code: "LOGINGIFT"</p>
+            <form method="post" action="/redemption.html">
+                <label for="code">Enter your redemption code here:</label>
+                <input type="text" id="code" name="code" maxlength="12" pattern="[A-Z0-9]+" autofocus required>
+                <br>
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        {% else %}
+            <p>Login to redeem code</p>
+        {% endif %}
+    </div>
+</body>
+</html>
